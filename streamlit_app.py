@@ -15,7 +15,7 @@ if st.button("✍️ স্ক্রিপ্ট তৈরি করুন") and
     with st.spinner("স্ক্রিপ্ট তৈরি হচ্ছে, একটু অপেক্ষা করুন..."):
         try:
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "তুমি একজন পেশাদার ইউটিউব স্ক্রিপ্ট লেখক। বাংলায় সহজ, অনুপ্রেরণামূলক স্ক্রিপ্ট লেখো।"},
                     {"role": "user", "content": f"{prompt} বিষয়ে একটি ২-৩ মিনিটের বাংলা ইউটিউব স্ক্রিপ্ট লেখো।"}
