@@ -2,6 +2,7 @@ import openai
 import streamlit as st
 import os
 
+# OpenAI API Key
 openai.api_key = st.secrets["openai_api_key"]
 
 st.set_page_config(page_title="Bangla YouTube Script Generator", layout="centered")
@@ -13,7 +14,7 @@ prompt = st.text_input("🔸 আপনার ভিডিওর বিষয় ল
 if st.button("✍️ স্ক্রিপ্ট তৈরি করুন") and prompt:
     with st.spinner("স্ক্রিপ্ট তৈরি হচ্ছে, একটু অপেক্ষা করুন..."):
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": "তুমি একজন পেশাদার ইউটিউব স্ক্রিপ্ট লেখক। বাংলায় সহজ, অনুপ্রেরণামূলক স্ক্রিপ্ট লেখো।"},
@@ -21,7 +22,8 @@ if st.button("✍️ স্ক্রিপ্ট তৈরি করুন") and
                 ],
                 temperature=0.7
             )
-            script = response['choices'][0]['message']['content']
+            script = response.choices[0].message.content
+
             st.success("✅ স্ক্রিপ্ট তৈরি হয়েছে!")
             st.text_area("📜 নিচে আপনার স্ক্রিপ্ট:", script, height=300)
 
@@ -29,5 +31,6 @@ if st.button("✍️ স্ক্রিপ্ট তৈরি করুন") and
                 os.makedirs("scripts")
             with open("scripts/generated_script.txt", "w", encoding="utf-8") as f:
                 f.write(script)
+
         except Exception as e:
             st.error(f"❌ সমস্যা হয়েছে: {e}")
